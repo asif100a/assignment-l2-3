@@ -1,0 +1,92 @@
+# =========================
+# Dependencies
+# =========================
+node_modules/
+jspm_packages/
+bower_components/
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Runtime data
+# =========================
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# =========================
+# Build / Compiled output
+# =========================
+dist/
+build/
+out/
+.tmp/
+.cache/
+
+# =========================
+# Coverage & Test reports
+# =========================
+coverage/
+.nyc_output/
+
+# =========================
+# OS generated files
+# =========================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# =========================
+# Editor & IDE settings
+# =========================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# =========================
+# TypeScript (if used)
+# =========================
+*.tsbuildinfo
+
+# =========================
+# ESLint / Prettier
+# =========================
+.eslintcache
+
+# =========================
+# Database files (local)
+# =========================
+*.sqlite
+*.sqlite3
+*.db
+
+# =========================
+# Uploads / User-generated files
+# =========================
+uploads/
+public/uploads/
+
+# =========================
+# Docker
+# =========================
+docker-data/
