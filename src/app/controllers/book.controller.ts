@@ -25,18 +25,32 @@ const createBook = async (req: Request, res: Response) => {
 
 const getBooks = async (req: Request, res: Response) => {
     try {
-        const filter = req.query.filter;
-        const sortBy = req.query.sortBy;
-        const sort = req.query.sort;
+        const filterQuery = req.query.filter;
+        const sortByQuery = req.query.sortBy;
+        const sortQuery = req.query.sort;
         const limitQuery = req.query.limit;
 
+        // Filter
+        let filter = {}
+        if (filterQuery) {
+            filter = { genre: filterQuery };
+        }
+
+        // Sort
+        let sortOption: any = { createdAt: -1 }
+        if (sortByQuery) {
+            const sortOrder = sortQuery === 'asc' ? 1 : -1
+            sortOption = { [sortByQuery as string]: sortOrder }
+        }
+
+        // Limit
         let limit = 10
         const parsedLimit = Number(limitQuery)
-        if(!isNaN(parsedLimit)) {
+        if (!isNaN(parsedLimit)) {
             limit = parsedLimit
         }
 
-        const data = await Book.find().limit(limit)
+        const data = await Book.find(filter).limit(limit).sort(sortOption)
 
         res.json({
             success: true,
