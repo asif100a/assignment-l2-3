@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Book from "../models/book.model";
 import { getErrorMessage } from "../../utils";
 
-const createBook = async(req: Request, res: Response) => {
+const createBook = async (req: Request, res: Response) => {
     try {
         const data = req.body;
 
@@ -23,7 +23,7 @@ const createBook = async(req: Request, res: Response) => {
     }
 }
 
-const getBooks = async(req: Request, res: Response) => {
+const getBooks = async (req: Request, res: Response) => {
     try {
         const data = await Book.find()
 
@@ -42,9 +42,9 @@ const getBooks = async(req: Request, res: Response) => {
     }
 }
 
-const getBookById = async(req: Request, res: Response) => {
+const getBookById = async (req: Request, res: Response) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const data = await Book.findById(id)
 
         res.json({
@@ -62,11 +62,32 @@ const getBookById = async(req: Request, res: Response) => {
     }
 }
 
-const deleteBookById = async(req: Request, res: Response) => {
+const updateBookById = async (req: Request, res: Response) => {
     try {
-        const {id} = req.params;
-        const data = await Book.deleteOne({_id: id})
-        console.log("Deleted data: ", data)
+        const { id } = req.params;
+        const updateDoc = req.body;
+
+        const data = await Book.findByIdAndUpdate(id, updateDoc, { new: true, runValidators: true })
+
+        res.json({
+            success: true,
+            message: "Book updated successfully",
+            data
+        })
+    } catch (error: unknown) {
+        console.error('❌ Error updating book by id: ', error)
+        res.json({
+            message: getErrorMessage(error),
+            success: false,
+            error
+        })
+    }
+}
+
+const deleteBookById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const data = await Book.findByIdAndDelete(id)
 
         res.json({
             success: true,
@@ -87,5 +108,6 @@ export const bookController = {
     createBook,
     getBooks,
     getBookById,
-    deleteBookById
+    updateBookById,
+    deleteBookById,
 }
