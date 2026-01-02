@@ -25,7 +25,18 @@ const createBook = async (req: Request, res: Response) => {
 
 const getBooks = async (req: Request, res: Response) => {
     try {
-        const data = await Book.find()
+        const filter = req.query.filter;
+        const sortBy = req.query.sortBy;
+        const sort = req.query.sort;
+        const limitQuery = req.query.limit;
+
+        let limit = 10
+        const parsedLimit = Number(limitQuery)
+        if(!isNaN(parsedLimit)) {
+            limit = parsedLimit
+        }
+
+        const data = await Book.find().limit(limit)
 
         res.json({
             success: true,
